@@ -53,6 +53,8 @@ Every check includes the latest **closed 5-minute** bar and the latest **closed 
 
 Friday 23 October is the size benchmark. A quiet 5-minute bar was about **500–1,000** contracts. A bar that carried a decision was above **2,000** contracts. The fall itself was above **5,000** contracts. A side leads when it is about three times the other side, or more than **75%** of the bar.
 
+When the user says **“Please check now”**, answer with **one updated table** and the live suggestions. Fetch a new spot quote, the latest closed 5-minute bar, the latest closed 15-minute bar, `GC=F` contracts, `^TNX`, and `ZN=F` before writing. Keep the same rows: real yield, expected inflation, 10-year yield, note future, dollar, spot, and each buy and sell zone. Fill **Buy now**, **Sell now**, and **Confidence** from that fresh close.
+
 Deliver the check as **one table**. Do not add a second table for the candles. Every row, including the yield rows and each buy or sell setup, carries:
 
 - **5-minute close and condition.** The latest 5-minute close, its tick count, its futures contracts, and the buy-side and sell-side split, plus the close that would trigger that row. A 5-minute close through the planned level is the immediate buy or sell. A quiet bar, under about **1,000** contracts, does not trigger the row. Asia, **3:00 AM–1:00 PM Bangladesh**, can print a thin 5-minute close. The row stays a wait unless the contracts are heavy.

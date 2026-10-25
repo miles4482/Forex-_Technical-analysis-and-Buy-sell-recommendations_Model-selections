@@ -53,10 +53,10 @@ Every check includes the latest **closed 5-minute** bar and the latest **closed 
 
 Friday 23 October is the size benchmark. A quiet 5-minute bar was about **500–1,000** contracts. A bar that carried a decision was above **2,000** contracts. The fall itself was above **5,000** contracts. A side leads when it is about three times the other side, or more than **75%** of the bar.
 
-Remarks on each bar:
+Deliver the check as **one table**. Do not add a second table for the candles. Every row, including the yield rows and each buy or sell setup, carries:
 
-- **5-minute remark.** This is the early catch. A 5-minute close through a planned level is Buy now or Sell now on that close. Say the confidence of that block and add “15-minute not closed.” A quiet bar, under about **1,000** contracts, is reported and is not the catch. Asia, **3:00 AM–1:00 PM Bangladesh**, can print a 5-minute close on a thin bar. Remark on it, and wait for London unless the contracts are heavy.
-- **15-minute remark.** This is the confirmation. A 15-minute close on the same side of the level confirms the 5-minute trade. A 15-minute close back through the other side finishes that early trade. The 15-minute close is the lead of the two.
+- **5-minute close and condition.** The latest 5-minute close, its tick count, its futures contracts, and the buy-side and sell-side split, plus the close that would trigger that row. A 5-minute close through the planned level is the immediate buy or sell. A quiet bar, under about **1,000** contracts, does not trigger the row. Asia, **3:00 AM–1:00 PM Bangladesh**, can print a thin 5-minute close. The row stays a wait unless the contracts are heavy.
+- **15-minute close status.** The latest 15-minute close and whether it has confirmed that row. A 15-minute close on the same side confirms the 5-minute trade. A 15-minute close back through the other side finishes it. The 15-minute close is the lead of the two.
 
 ## One plan
 

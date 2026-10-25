@@ -2,7 +2,7 @@
 
 These are the rules used for the running XAUUSD commentary in this repo. This is market commentary, not personal financial advice. Price levels go stale. The method below does not.
 
-Last updated: **2:08 AM New York, Tuesday 13 October 2026**.
+Last updated: **1:33 PM New York, Sunday 25 October 2026** (11:33 PM Bangladesh).
 
 ## How a candle is read
 
@@ -10,7 +10,7 @@ Last updated: **2:08 AM New York, Tuesday 13 October 2026**.
 - Yahoo Finance bars are stamped at the **bar start**. A 15-minute bar stamped 1:45 closed at 2:00. Name the candle by the close.
 - A flat, zero-range last bar is an unfinished stub. Ignore it. A bar that already has a real range and has not reached its close time is still forming. Do not treat it as closed.
 - A wick is not a trigger. Buy and sell levels need a **close** through the level.
-- When a 15-minute candle and an hourly candle close together, the hour is the lead candle. The 15-minute candle is the entry check.
+- The **5-minute close** is the immediate decision. The **15-minute close** confirms it. When a 15-minute candle and an hourly candle close together, the hour is the lead candle.
 - 4-hour candles close at 01:00, 05:00, 09:00, 13:00, 17:00, and 21:00 UTC. In EDT that is **9:00 PM, 1:00 AM, 5:00 AM, 9:00 AM, 1:00 PM, and 5:00 PM** New York.
 
 ## Price feeds
@@ -40,6 +40,24 @@ A pullback to a level **holds** when the 15-minute candle closes back on the saf
 - For a dip buy at 4190, price may trade under 4190 during the candle. The buy is a **close back above 4190**.
 - A close under 4190 did not hold. No buy.
 
+## Tick count, contracts, and order flow
+
+Every check includes the latest **closed 5-minute** bar and the latest **closed 15-minute** bar, plus the regular checkpoints (real yield, expected inflation, `^TNX`, `ZN=F`, the dollar, and the strong or mild order block).
+
+| Field | What to read |
+|---|---|
+| Tick count | Spot `tickVolume` on that candle. The spot `volume` field stays 0. |
+| Contracts | COMEX gold futures `GC=F` volume for the same candle. One contract is 100 ounces. |
+| Tick size | Spot **$0.01**. Futures **$0.10**, worth **$10** per contract. |
+| Order flow | Buy-side contracts = contracts × (close − low) / (high − low). Sell-side contracts are the rest. |
+
+Friday 23 October is the size benchmark. A quiet 5-minute bar was about **500–1,000** contracts. A bar that carried a decision was above **2,000** contracts. The fall itself was above **5,000** contracts. A side leads when it is about three times the other side, or more than **75%** of the bar.
+
+Remarks on each bar:
+
+- **5-minute remark.** This is the early catch. A 5-minute close through a planned level is Buy now or Sell now on that close. Say the confidence of that block and add “15-minute not closed.” A quiet bar, under about **1,000** contracts, is reported and is not the catch. Asia, **3:00 AM–1:00 PM Bangladesh**, can print a 5-minute close on a thin bar. Remark on it, and wait for London unless the contracts are heavy.
+- **15-minute remark.** This is the confirmation. A 15-minute close on the same side of the level confirms the 5-minute trade. A 15-minute close back through the other side finishes that early trade. The 15-minute close is the lead of the two.
+
 ## One plan
 
 Use one working plan: direction, the entry, the stop, and the targets. Do not publish a menu of dip buy, deeper dip, strong buy, tactical sell, and strong sell in the same update unless that menu is explicitly requested.
@@ -60,16 +78,21 @@ Asia before London is thin. A level can break and fail there.
 
 ## Plan in force
 
-Set at the **2:00 AM New York** close on Tuesday 13 October 2026. Spot was about 4194. The 10-year note was 104.88, above 104.70.
+Set from the Friday 23 October 2026 close for Monday 26 October. Spot closed **3996.2**. Futures `GC=F` closed **4007.9**. The cash 10-year yield was **4.988%**, under **5.22%**. The note future was **106.16**, above **105.17**. Those two agree, so the buy is at demand. Real yield was **2.66%**. Expected inflation was **2.34%**. The dollar closed **101.81**.
 
-The 1:00 AM 4-hour candle had closed up at about 4198, above 4180. The 2:00 AM hour then failed at 4200 and held 4190. Direction is up. This is the dip buy, not the breakout.
+There is no trade at **3996**. Price sits between **3987** and **4002**.
 
 | Trade | Rule |
 |---|---|
-| Buy | **4194**, the 15-minute close back above 4190 |
-| Stop | **4178** |
-| Targets | **4200**, then **4219** |
-| Breakout, if not already in | A later 15-minute close above **4200**. Stop **4190**. Target **4219**. |
-| Note | The buy stays valid while `ZN=F` holds above **104.70**. |
+| Buy | **3982–3987**, Strong +OB, daily and 4-hour. A 5-minute close back above **3982** is the immediate buy. The 15-minute close back above **3982** confirms it. |
+| Confidence | **70%** |
+| Stop | A 15-minute close under **3975.5** |
+| Targets | **4002**, then **4012** |
+| Order flow | Buy-side contracts larger than sell-side, on a bar above **2,000** contracts |
+| Sell | **4024–4032**, Mild −OB, 15-minute and 4-hour. A 5-minute close back under **4024** is the immediate sell. The 15-minute close confirms it. |
+| Confidence | **55%** |
+| Stop | A 15-minute close above **4034.2** |
+| Targets | **4012**, then **4002** |
+| Note | The buy stays valid while `ZN=F` holds above **105.17** and `^TNX` holds under **5.22%**. |
 
-Cancel the dip buy if a 15-minute candle closes under **4178**. Do not sell 4194 while the note is above 104.70 and the 4-hour close is above 4180.
+The nearer supply at **4002–4006** is a **50%** sell only after a 5-minute, then 15-minute, close back under **4002**. A 15-minute close under **3975.5** cancels the 3982 buy and hands the plan to the deeper Strong +OB at **3943–3959**.

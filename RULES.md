@@ -11,7 +11,7 @@ Last updated: **9:36 AM Bangladesh, Monday 26 October 2026**.
 - A flat, zero-range last bar is an unfinished stub. Ignore it. A bar that already has a real range and has not reached its close time is still forming. Do not treat it as closed.
 - A wick is not a trigger. Buy and sell levels need a **close** through the level.
 - The **5-minute close** is the immediate decision. The **15-minute close** confirms it. When a 15-minute candle and an hourly candle close together, the hour is the lead candle.
-- The check is not limited to those two. Read the **30-minute**, **1-hour**, and **4-hour** closes, and the strong support and resistance of each timeframe, when price is near one of those levels or one of those candles has just closed.
+- The check is adaptive. Read the **5-minute**, **15-minute**, **30-minute**, **1-hour**, **2-hour**, and **4-hour** candles, and the **daily** when price is inside a daily range or near a daily block. Report the timeframes that change the trade. A quiet higher-timeframe candle with nothing at a level does not need its own row.
 - The user’s 4-hour clock is the one used for calls. In Bangladesh those candles change at **3:00 AM, 7:00 AM, 11:00 AM, 3:00 PM, 7:00 PM, and 11:00 PM**. The live biquote feed is one hour earlier, at 2:00, 6:00, 10:00, 2:00 PM, 6:00 PM, and 10:00 PM. Name a feed candle by its own time, and do not call that the user’s 4-hour close.
 
 ## Price feeds
@@ -54,7 +54,7 @@ Every check includes the latest **closed 5-minute** bar and the latest **closed 
 
 Friday 23 October is the size benchmark. A quiet 5-minute bar was about **500–1,000** contracts. A bar that carried a decision was above **2,000** contracts. The fall itself was above **5,000** contracts. A side leads when it is about three times the other side, or more than **75%** of the bar.
 
-When the user says **“Please check now”**, answer with **one updated table** and the live suggestions. Fetch a new spot quote, the latest closed 5-minute bar, the latest closed 15-minute bar, `GC=F` contracts, `^TNX`, and `ZN=F` before writing. Also fetch the **30-minute**, **1-hour**, and **4-hour** bars when a higher-timeframe level is in play or one of those candles has just closed. Keep the same rows: real yield, expected inflation, 10-year yield, note future, dollar, spot, and each buy and sell zone. Fill **Buy now**, **Sell now**, and **Confidence** from that fresh close.
+When the user says **“Please check now”** or **“Please check”**, answer with **one updated table** and the live suggestions. Fetch a new spot quote, `GC=F` contracts, `^TNX`, and `ZN=F`, and read the 5-minute, 15-minute, 30-minute, 1-hour, 2-hour, and 4-hour bars before writing. Use the user’s 4-hour clock. Fill **Buy now**, **Sell now**, and **Confidence** from the closes that actually changed. Share the potential and the scope. Do not repeat a distant zone that price has not reached.
 
 Deliver the check as **one table**. Do not add a second table for the candles. Every row, including the yield rows and each buy or sell setup, carries:
 

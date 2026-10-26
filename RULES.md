@@ -2,7 +2,7 @@
 
 These are the rules used for the running XAUUSD commentary in this repo. This is market commentary, not personal financial advice. Price levels go stale. The method below does not.
 
-Last updated: **1:17 PM Bangladesh, Monday 26 October 2026**.
+Last updated: **2:07 PM Bangladesh, Monday 26 October 2026**.
 
 ## How a candle is read
 
@@ -117,3 +117,42 @@ There is no trade at **3996**. Price sits between **3987** and **4002**.
 | Note | The buy stays valid while `ZN=F` holds above **105.17** and `^TNX` holds under **5.22%**. |
 
 The nearer supply at **4002–4006** is a **50%** sell only after a 5-minute, then 15-minute, close back under **4002**. A 15-minute close under **3975.5** cancels the 3982 buy and hands the plan to the deeper Strong +OB at **3943–3959**.
+
+## MetaTrader 5 robot
+
+The robot is `mt5/XAUUSD_Rules_EA.mq5`. It applies this method on an XAUUSD chart. A trade needs a 5-minute close back through the block, a 15-minute close on the same side, and order flow leading on that 5-minute bar. A wick does not open a trade. The order-flow split is the one in the checks: buy side is volume × (close − low) / (high − low), and the sell side is the rest. A side leads at **75%** of the bar. The robot holds one position. The default lot is **0.01**. There is no grid and no adding to a loser.
+
+Install it on the computer where MetaTrader 5 is installed:
+
+1. In MetaTrader 5 open **File → Open Data Folder → MQL5 → Experts**.
+2. Copy `XAUUSD_Rules_EA.mq5` into that Experts folder.
+3. Open the file in MetaEditor and press **Compile**. The result needs **0 errors**.
+4. Open **XAUUSD** and set the chart to **M5**.
+5. Drag **XAUUSD rules robot** onto the chart.
+6. Turn on **Algo Trading**.
+7. Run it on a **demo** account first.
+
+The chart comment shows **Buy now**, **Sell now**, the last 5-minute and 15-minute flow, and the spread. Blue rectangles are buy blocks. Red rectangles are sell blocks. The darker color is the strong block.
+
+The default prices are the **26 October 2026** plan. They go stale. Change them in the inputs when a newer check replaces them.
+
+| Block | Entry | 15-minute cancel | Targets | Default |
+|---|---|---|---|---|
+| Strong +OB **3982–3987** | 5-minute and 15-minute close back above **3982** | close under **3975.5** | **4002**, then **4012** | On, while the 15-minute close is above **3975.5** |
+| Strong +OB **3943–3959** | close back above **3943** | close under **3936.5** | **3975**, then **3982** | On after a 15-minute close under **3975.5** |
+| Mild −OB **4024–4032** | close back under **4024** | close above **4034.2** | **4012**, then **4002** | On |
+| Shelf **4002–4006** | close back under **4002** | close above **4006.5** | **3987**, then **3982** | On, half size |
+| Mild +OB **4003–4007** | close back above **4003** | close under **3998** | **4012** | Drawn. Trades when **Trade mild blocks** is on |
+| Mild −OB **4009–4012** | close back under **4009** | close above **4013** | **4003** | Drawn. Trades when **Trade mild blocks** is on |
+| Mild −OB **4015–4019** | close back under **4015** | close above **4022** | **4009** | Drawn. Trades when **Trade mild blocks** is on |
+| Strong −OB **4088–4103** | close back under **4088** | close above **4110** | **4034**, then **4024** | On |
+
+On a spot chart the bar volume is **broker ticks**. The **1,000 / 2,000 / 5,000** lines are COMEX `GC=F` contract counts. Leave **Volume is COMEX contracts** off on spot, and leave **Also accept a bar that is large versus its average** on. A decision bar is then **1.5×** the average of the last 20 closed bars of that timeframe. From **03:00 to 13:00 Bangladesh** the bar needs **2.5×** that average. Turn **Volume is COMEX contracts** on when the symbol is a futures contract. The 1,000, 2,000, and 5,000 lines then apply, and a quiet bar under 1,000 does not trade.
+
+The plan stop is a **15-minute close** through the cancel price. The robot waits for that close. An emergency broker stop sits **15** dollars beyond the cancel. Turn on **Broker stop on the cancel price** when the exit should be a touch of that price.
+
+The 4-hour clock in this plan closes at **03:00, 07:00, 11:00, 15:00, 19:00, and 23:00 Bangladesh**. The chart’s own 4-hour bars match that clock when the broker server is **UTC+3**. The comment says when they do not. Entries still use the 5-minute and 15-minute closes. Set **Broker server UTC offset** to the server’s offset.
+
+The parameters table stays outside the robot. The buy plan still wants the note future above **105.17** and the 10-year yield under **5.22%**. A reclaim that closed before the robot was attached is left alone. The next fresh reclaim can trade.
+
+Detected blocks are drawn from the 15-minute, 30-minute, 1-hour, 2-hour, 4-hour, and daily bars. They trade after **Trade a detected block** is turned on. A detected buy is a close back above the block. A detected sell is a close back under the block. A block the plan already has is kept as the plan block.

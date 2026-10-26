@@ -2,7 +2,7 @@
 
 These are the rules used for the running XAUUSD commentary in this repo. This is market commentary, not personal financial advice. Price levels go stale. The method below does not.
 
-Last updated: **2:19 PM Bangladesh, Monday 26 October 2026**.
+Last updated: **5:19 PM Bangladesh, Monday 26 October 2026**.
 
 ## How a candle is read
 
@@ -52,7 +52,11 @@ Every check includes the latest **closed 5-minute** bar and the latest **closed 
 | Tick size | Spot **$0.01**. Futures **$0.10**, worth **$10** per contract. |
 | Order flow | Buy-side contracts = contracts × (close − low) / (high − low). Sell-side contracts are the rest. |
 
-Friday 23 October is the size benchmark. A quiet 5-minute bar was about **500–1,000** contracts. A bar that carried a decision was above **2,000** contracts. The fall itself was above **5,000** contracts. A side leads when it is about three times the other side, or more than **75%** of the bar.
+Friday 23 October is the size benchmark. A quiet 5-minute bar was about **500–1,000** contracts. A bar that carried a decision was above **2,000** contracts. The fall itself was above **5,000** contracts. A side leads when it is about three times the other side, or more than **75%** of the bar. These numbers describe the bar. They are not a line that allows or blocks a buy or a sell.
+
+Every check reads the contract count and the order flow. State the count, the buy-side contracts, and the sell-side contracts where a print exists. A row with no print says the print is not out. Do not use that count as the reason to take or to skip the trade. The buy and the sell follow the price rules already in this file: a 5-minute close, the 15-minute confirmation, the order blocks, the deep plan, and support and resistance.
+
+When a move is a crash or a massive rise, say so in the first line, before the tables. Name the Bangladesh time, the size of the move, and the level that broke. Do not wait for the table to carry that alert.
 
 When the user says **“Please check now”** or **“Please check”**, answer with **three tables**, in this order. Fetch a new spot quote, `GC=F` contracts, `^TNX`, `ZN=F`, and the dollar, and read the 5-minute, 15-minute, 30-minute, 1-hour, 2-hour, and 4-hour bars before writing. Use the user’s 4-hour clock. Fill **Buy now**, **Sell now**, and **Confidence** from the closes that actually changed. Share the potential and the scope. Do not repeat a distant zone that price has not reached. Every condition states the futures **contract** count that confirms it, or a note gives the latest printed contract count when that bar has no print yet. Buy-side or sell-side leading is not a condition without the contract number. The major-highlights row names the **Bangladesh time** of that bar and the time of the check.
 
@@ -70,14 +74,16 @@ The **Gold** column is one of five grades. The change versus yesterday sets the 
 
 A higher real yield pressures gold. A higher 10-year yield pressures gold. A higher note price supports gold. A higher dollar pressures gold. Higher expected inflation supports gold.
 
-**Table 2 is the buy plan. Table 3 is the sell plan.** Each uses two columns only, **Plan** and **Detail**, so Detail has the width on a phone. The contract grade is the last words of the Detail cell: **Contracts: Strong**, **Mild**, **Neutral**, or **No**, from the futures count and the buy-side or sell-side split on that row. Every row that has a candle or a trade condition states the order flow where a print exists: the contract count, the buy-side contracts, and the sell-side contracts. A buy-side or sell-side lead is not stated without those three numbers. Every row that has a contract count also states the order flow: the buy-side contracts and the sell-side contracts. A row with no printed contracts says the print is not out. Do not add a third column. Do not repeat Real yield, Expected inflation, 10-year yield, Note future, or Dollar in these tables. Those grades stay in Table 1.
+The first line of a check, before Table 1, is **Buy now** and **Sell now**.
 
-Rows, in order: **Scope now**, **Entry**, **Confirmation**, **Stop**, **Targets**, **5-minute**, **15-minute**, **30-minute**, **1-hour**, **2-hour**, **4-hour**, **Supports**, **Resistances**, **+OB**, **−OB**, **Confidence**, **Major highlights**. The **+OB** and **−OB** rows name every timeframe that has a block: 5-minute, 15-minute, 30-minute, 1-hour, 2-hour, 4-hour, and daily. Say whether it is mild or strong. A timeframe with no block of its own is left out. Supports and resistances name the strong level, the mild level, the low level, and the daily, weekly, and monthly level, with the range and the timeframe. Confidence is stated against the price where the suggestion applies. Major highlights carry the Bangladesh time, the contract count, and the flow. The candle rows carry:
+**The plan is one table.** Columns are **Plan**, **Buy Plan**, and **Sell Plan**. Keep each cell short. Every candle row states the order flow where a print exists: the contract count, the buy-side contracts, and the sell-side contracts. A lead is not stated without those three numbers. A row with no printed contracts says the print is not out. The contract count is reported. It does not decide the buy or the sell. Do not repeat Real yield, Expected inflation, 10-year yield, Note future, or Dollar in this table. Those grades stay in Table 1.
 
-- **5-minute close and condition.** The latest 5-minute close, its tick count, its futures contracts, and the buy-side and sell-side split, plus the close that would trigger that row. A 5-minute close through the planned level is the immediate buy or sell. A quiet bar, under about **1,000** contracts, does not trigger the row. Asia, **3:00 AM–1:00 PM Bangladesh**, can print a thin 5-minute close. The row stays a wait unless the contracts are heavy.
+Rows, in order: **Scope now**, **Entry**, **Confirmation**, **Deep plan**, **Stop**, **Targets**, **5-minute**, **15-minute**, **30-minute**, **1-hour**, **2-hour**, **4-hour**, **Supports**, **Resistances**, **+OB**, **−OB**, **Confidence**, **Major highlights**. **Deep plan** is the full-size zone behind the current idea: for a buy, **3982–3987**, then **3943–3959** if **3975.5** breaks; for a sell, **4024–4032**, then **4088–4103**. The **+OB** and **−OB** rows name every timeframe that has a block: 5-minute, 15-minute, 30-minute, 1-hour, 2-hour, 4-hour, and daily. Say whether it is mild or strong. A timeframe with no block of its own is left out. Supports and resistances name the strong level, the mild level, the low level, and the daily, weekly, and monthly level, with the range and the timeframe. Confidence is stated against the price where the suggestion applies. Major highlights carry the Bangladesh time, the contract count, and the flow. The candle rows carry:
+
+- **5-minute close and condition.** The latest 5-minute close, its tick count, its futures contracts, and the buy-side and sell-side split, plus the close that would trigger that row. A 5-minute close through the planned level is the immediate buy or sell. Report a quiet bar. The contract count does not by itself cancel that close. Asia, **3:00 AM–1:00 PM Bangladesh**, can print a thin 5-minute close. Say that the session is thin.
 - **15-minute close status.** The latest 15-minute close and whether it has confirmed that row. A 15-minute close on the same side confirms the 5-minute trade. A 15-minute close back through the other side finishes it. The 15-minute close is the lead of the two.
 - **Higher timeframe, when required.** Add the 30-minute, 1-hour, 2-hour, and 4-hour close on the same row when that close changes the suggestion. Keep the strong support and resistance in the table and name the timeframe that made each one: 30-minute, 1-hour, 2-hour, 4-hour, or daily, and whether the block is mild or strong. A higher-timeframe close is the structure. The 5-minute close remains the immediate entry.
-- **Closed higher-timeframe contracts.** When a 30-minute, 1-hour, 2-hour, or 4-hour candle has closed, the buy table and the sell table carry that candle’s futures contract count and the buy-side and sell-side split. Sum the `GC=F` 5-minute bars inside the candle. The 4-hour uses the Bangladesh clock and closes at **3:00, 7:00, 11:00, 15:00, 19:00, and 23:00**. The 2-hour on that same clock closes at **1:00, 3:00, 5:00, 7:00, 9:00, 11:00, 13:00, 15:00, 17:00, 19:00, 21:00, and 23:00**. The 30-minute and 1-hour close on the Bangladesh clock. A higher-timeframe close still needs more than **2,000** contracts before it confirms a buy or a sell. The summary names each closed candle, its Bangladesh close time, and its contract count.
+- **Closed higher-timeframe contracts.** When a 30-minute, 1-hour, 2-hour, or 4-hour candle has closed, the buy table and the sell table carry that candle’s futures contract count and the buy-side and sell-side split. Sum the `GC=F` 5-minute bars inside the candle. The 4-hour uses the Bangladesh clock and closes at **3:00, 7:00, 11:00, 15:00, 19:00, and 23:00**. The 2-hour on that same clock closes at **1:00, 3:00, 5:00, 7:00, 9:00, 11:00, 13:00, 15:00, 17:00, 19:00, 21:00, and 23:00**. The 30-minute and 1-hour close on the Bangladesh clock. Report the contract count and the buy-side and sell-side split. The close confirms the buy or the sell. The contract count does not replace that close. The summary names each closed candle, its Bangladesh close time, and its contract count.
 
 ## One plan
 
@@ -109,7 +115,7 @@ There is no trade at **3996**. Price sits between **3987** and **4002**.
 | Confidence | **70%** |
 | Stop | A 15-minute close under **3975.5** |
 | Targets | **4002**, then **4012** |
-| Order flow | Buy-side contracts larger than sell-side, on a bar above **2,000** contracts |
+| Order flow | Read the contract count and the buy-side and sell-side split. The split does not replace the 5-minute and 15-minute closes. |
 | Sell | **4024–4032**, Mild −OB, 15-minute and 4-hour. A 5-minute close back under **4024** is the immediate sell. The 15-minute close confirms it. |
 | Confidence | **55%** |
 | Stop | A 15-minute close above **4034.2** |

@@ -2,7 +2,7 @@
 
 These are the rules used for the running XAUUSD commentary in this repo. This is market commentary, not personal financial advice. Price levels go stale. The method below does not.
 
-Last updated: **11:09 AM Bangladesh, Monday 26 October 2026**.
+Last updated: **11:30 AM Bangladesh, Monday 26 October 2026**.
 
 ## How a candle is read
 
@@ -54,9 +54,11 @@ Every check includes the latest **closed 5-minute** bar and the latest **closed 
 
 Friday 23 October is the size benchmark. A quiet 5-minute bar was about **500–1,000** contracts. A bar that carried a decision was above **2,000** contracts. The fall itself was above **5,000** contracts. A side leads when it is about three times the other side, or more than **75%** of the bar.
 
-When the user says **“Please check now”** or **“Please check”**, answer with **one updated table** and the live suggestions. Fetch a new spot quote, `GC=F` contracts, `^TNX`, and `ZN=F`, and read the 5-minute, 15-minute, 30-minute, 1-hour, 2-hour, and 4-hour bars before writing. Use the user’s 4-hour clock. Fill **Buy now**, **Sell now**, and **Confidence** from the closes that actually changed. Share the potential and the scope. Do not repeat a distant zone that price has not reached. Every condition states the futures **contract** count that confirms it, or a note gives the latest printed contract count when that bar has no print yet. Buy-side or sell-side leading is not a condition without the contract number. The summary note names the **Bangladesh time** of that bar and the time of the check. The last lines of that note give the real yield, the 10-year yield against **5.22%**, the note future against **105.17**, and the dollar.
+When the user says **“Please check now”** or **“Please check”**, answer with **two tables**, in this order. Fetch a new spot quote, `GC=F` contracts, `^TNX`, `ZN=F`, and the dollar, and read the 5-minute, 15-minute, 30-minute, 1-hour, 2-hour, and 4-hour bars before writing. Use the user’s 4-hour clock. Fill **Buy now**, **Sell now**, and **Confidence** from the closes that actually changed. Share the potential and the scope. Do not repeat a distant zone that price has not reached. Every condition states the futures **contract** count that confirms it, or a note gives the latest printed contract count when that bar has no print yet. Buy-side or sell-side leading is not a condition without the contract number. The summary note names the **Bangladesh time** of that bar and the time of the check.
 
-Deliver the check as **one table**. Do not add a second table for the candles. Every row, including the yield rows and each buy or sell setup, carries:
+**Table 1, parameters, comes first.** The reader reads this before the suggestions. Columns are **Parameter**, **Status**, **Value**, **Line**, and **Supports gold**. The rows are real yield, expected inflation, the 10-year yield, the note future, and the dollar. Status is **Open**, **Frozen**, or **Fixed for the last day**. The lines are **5.22%** for the 10-year yield, **105.17** for the note future, and the last daily dollar close for the dollar. Real yield and expected inflation are the last daily posts and have no intraday line. **Supports gold** is **Yes** when the 10-year yield is under **5.22%**, the note is above **105.17**, or the dollar is under its last daily close. Real yield and expected inflation read **Steady** while the daily post is unchanged. These five rows do not appear again in the suggestions table.
+
+**Table 2 is the suggestions table.** Do not add a third table for the candles. Every row carries:
 
 - **5-minute close and condition.** The latest 5-minute close, its tick count, its futures contracts, and the buy-side and sell-side split, plus the close that would trigger that row. A 5-minute close through the planned level is the immediate buy or sell. A quiet bar, under about **1,000** contracts, does not trigger the row. Asia, **3:00 AM–1:00 PM Bangladesh**, can print a thin 5-minute close. The row stays a wait unless the contracts are heavy.
 - **15-minute close status.** The latest 15-minute close and whether it has confirmed that row. A 15-minute close on the same side confirms the 5-minute trade. A 15-minute close back through the other side finishes it. The 15-minute close is the lead of the two.

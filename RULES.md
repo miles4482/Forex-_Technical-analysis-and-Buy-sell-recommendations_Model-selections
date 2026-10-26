@@ -2,7 +2,7 @@
 
 These are the rules used for the running XAUUSD commentary in this repo. This is market commentary, not personal financial advice. Price levels go stale. The method below does not.
 
-Last updated: **9:36 AM Bangladesh, Monday 26 October 2026**.
+Last updated: **11:09 AM Bangladesh, Monday 26 October 2026**.
 
 ## How a candle is read
 
@@ -60,7 +60,8 @@ Deliver the check as **one table**. Do not add a second table for the candles. E
 
 - **5-minute close and condition.** The latest 5-minute close, its tick count, its futures contracts, and the buy-side and sell-side split, plus the close that would trigger that row. A 5-minute close through the planned level is the immediate buy or sell. A quiet bar, under about **1,000** contracts, does not trigger the row. Asia, **3:00 AM–1:00 PM Bangladesh**, can print a thin 5-minute close. The row stays a wait unless the contracts are heavy.
 - **15-minute close status.** The latest 15-minute close and whether it has confirmed that row. A 15-minute close on the same side confirms the 5-minute trade. A 15-minute close back through the other side finishes it. The 15-minute close is the lead of the two.
-- **Higher timeframe, when required.** Add the 30-minute, 1-hour, and 4-hour close on the same row when that close changes the suggestion. Keep the strong support and resistance in the table and name the timeframe that made each one: 30-minute, 1-hour, 4-hour, or daily, and whether the block is mild or strong. A higher-timeframe close is the structure. The 5-minute close remains the immediate entry.
+- **Higher timeframe, when required.** Add the 30-minute, 1-hour, 2-hour, and 4-hour close on the same row when that close changes the suggestion. Keep the strong support and resistance in the table and name the timeframe that made each one: 30-minute, 1-hour, 2-hour, 4-hour, or daily, and whether the block is mild or strong. A higher-timeframe close is the structure. The 5-minute close remains the immediate entry.
+- **Closed higher-timeframe contracts.** When a 30-minute, 1-hour, 2-hour, or 4-hour candle has closed, the one table carries that candle’s futures contract count and the buy-side and sell-side split. Sum the `GC=F` 5-minute bars inside the candle. The 4-hour uses the Bangladesh clock and closes at **3:00, 7:00, 11:00, 15:00, 19:00, and 23:00**. The 2-hour on that same clock closes at **1:00, 3:00, 5:00, 7:00, 9:00, 11:00, 13:00, 15:00, 17:00, 19:00, 21:00, and 23:00**. The 30-minute and 1-hour close on the Bangladesh clock. A higher-timeframe close still needs more than **2,000** contracts before it confirms a buy or a sell. The summary names each closed candle, its Bangladesh close time, and its contract count.
 
 ## One plan
 

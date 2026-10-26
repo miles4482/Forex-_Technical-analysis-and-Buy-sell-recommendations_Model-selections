@@ -2,7 +2,7 @@
 
 These are the rules used for the running XAUUSD commentary in this repo. This is market commentary, not personal financial advice. Price levels go stale. The method below does not.
 
-Last updated: **1:33 PM New York, Sunday 25 October 2026** (11:33 PM Bangladesh).
+Last updated: **9:36 AM Bangladesh, Monday 26 October 2026**.
 
 ## How a candle is read
 
@@ -12,7 +12,7 @@ Last updated: **1:33 PM New York, Sunday 25 October 2026** (11:33 PM Bangladesh)
 - A wick is not a trigger. Buy and sell levels need a **close** through the level.
 - The **5-minute close** is the immediate decision. The **15-minute close** confirms it. When a 15-minute candle and an hourly candle close together, the hour is the lead candle.
 - The check is not limited to those two. Read the **30-minute**, **1-hour**, and **4-hour** closes, and the strong support and resistance of each timeframe, when price is near one of those levels or one of those candles has just closed.
-- 4-hour candles close at 01:00, 05:00, 09:00, 13:00, 17:00, and 21:00 UTC. In EDT that is **9:00 PM, 1:00 AM, 5:00 AM, 9:00 AM, 1:00 PM, and 5:00 PM** New York.
+- The user’s 4-hour clock is the one used for calls. In Bangladesh those candles change at **3:00 AM, 7:00 AM, 11:00 AM, 3:00 PM, 7:00 PM, and 11:00 PM**. The live biquote feed is one hour earlier, at 2:00, 6:00, 10:00, 2:00 PM, 6:00 PM, and 10:00 PM. Name a feed candle by its own time, and do not call that the user’s 4-hour close.
 
 ## Price feeds
 

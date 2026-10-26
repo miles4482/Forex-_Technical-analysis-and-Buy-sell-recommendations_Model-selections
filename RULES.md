@@ -2,7 +2,7 @@
 
 These are the rules used for the running XAUUSD commentary in this repo. This is market commentary, not personal financial advice. Price levels go stale. The method below does not.
 
-Last updated: **1:03 PM Bangladesh, Monday 26 October 2026**.
+Last updated: **1:17 PM Bangladesh, Monday 26 October 2026**.
 
 ## How a candle is read
 
@@ -70,7 +70,7 @@ The **Gold** column is one of five grades. The change versus yesterday sets the 
 
 A higher real yield pressures gold. A higher 10-year yield pressures gold. A higher note price supports gold. A higher dollar pressures gold. Higher expected inflation supports gold.
 
-**Table 2 is the buy plan. Table 3 is the sell plan.** Each uses the same rows. Columns are **Plan**, **Detail**, **Contracts support?**, **Real yield**, **Expected inflation**, **10-year yield**, **Note future**, and **Dollar**. The five gold columns repeat the grades from Table 1. The contract column is **Strong support**, **Mild support**, **Neutral**, or **No**, from the futures count and the buy-side or sell-side split on that row.
+**Table 2 is the buy plan. Table 3 is the sell plan.** Each uses the same rows. Columns are **Plan**, **Detail**, and **Contracts support?** only. Do not repeat Real yield, Expected inflation, 10-year yield, Note future, or Dollar in these tables. Those grades stay in Table 1. The contract column is **Strong support**, **Mild support**, **Neutral**, or **No**, from the futures count and the buy-side or sell-side split on that row.
 
 Rows, in order: **Scope now**, **Entry**, **Confirmation**, **Stop**, **Targets**, **5-minute**, **15-minute**, **30-minute**, **1-hour**, **2-hour**, **4-hour**, **Supports**, **Resistances**, **+OB**, **−OB**, **Confidence**, **Major highlights**. Supports and resistances name the strong level, the mild level, the low level, and the daily, weekly, and monthly level, with the range and the timeframe. Confidence is stated against the price where the suggestion applies. Major highlights carry the Bangladesh time, the contract count, and the flow. The candle rows carry:
 

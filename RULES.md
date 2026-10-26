@@ -2,7 +2,7 @@
 
 These are the rules used for the running XAUUSD commentary in this repo. This is market commentary, not personal financial advice. Price levels go stale. The method below does not.
 
-Last updated: **11:30 AM Bangladesh, Monday 26 October 2026**.
+Last updated: **11:35 AM Bangladesh, Monday 26 October 2026**.
 
 ## How a candle is read
 
@@ -56,7 +56,19 @@ Friday 23 October is the size benchmark. A quiet 5-minute bar was about **500–
 
 When the user says **“Please check now”** or **“Please check”**, answer with **two tables**, in this order. Fetch a new spot quote, `GC=F` contracts, `^TNX`, `ZN=F`, and the dollar, and read the 5-minute, 15-minute, 30-minute, 1-hour, 2-hour, and 4-hour bars before writing. Use the user’s 4-hour clock. Fill **Buy now**, **Sell now**, and **Confidence** from the closes that actually changed. Share the potential and the scope. Do not repeat a distant zone that price has not reached. Every condition states the futures **contract** count that confirms it, or a note gives the latest printed contract count when that bar has no print yet. Buy-side or sell-side leading is not a condition without the contract number. The summary note names the **Bangladesh time** of that bar and the time of the check.
 
-**Table 1, parameters, comes first.** The reader reads this before the suggestions. Columns are **Parameter**, **Status**, **Value**, **Line**, and **Supports gold**. The rows are real yield, expected inflation, the 10-year yield, the note future, and the dollar. Status is **Open**, **Frozen**, or **Fixed for the last day**. The lines are **5.22%** for the 10-year yield, **105.17** for the note future, and the last daily dollar close for the dollar. Real yield and expected inflation are the last daily posts and have no intraday line. **Supports gold** is **Yes** when the 10-year yield is under **5.22%**, the note is above **105.17**, or the dollar is under its last daily close. Real yield and expected inflation read **Steady** while the daily post is unchanged. These five rows do not appear again in the suggestions table.
+**Table 1, parameters, comes first.** The reader reads this before the suggestions. Columns are **Parameter**, **Status**, **Value**, **Yesterday**, **Line**, and **Gold**. The rows are real yield, expected inflation, the 10-year yield, the note future, and the dollar. Status is **Open**, **Frozen**, or **Fixed for the last day**. The lines are **5.22%** for the 10-year yield, **105.17** for the note future, and the last daily dollar close for the dollar. Real yield and expected inflation are the last daily Treasury posts and have no intraday line. Yesterday is the previous session: Thursday’s post when the row is a daily Treasury figure read on Monday, and Friday’s close when the row is trading.
+
+The **Gold** column is one of five grades. The change versus yesterday sets the grade. The line is the other consideration: a break through the line the wrong way makes the grade **Strong pressure**, and a hold of the line stops a large adverse day from being read on its own.
+
+| Grade | 10-year yield and real yield | Expected inflation | Note future | Dollar |
+|---|---|---|---|---|
+| **Strong support** | Down more than **5 bp**, and the 10-year is under **5.22%** | Up more than **5 bp** | Up more than **0.25**, and above **105.17** | Down more than **0.30** |
+| **Mild support** | Down **1–5 bp**, and the 10-year is under **5.22%** | Up **1–5 bp** | Up **0.03–0.25**, and above **105.17** | Down **0.05–0.30** |
+| **Neutral** | Change under **1 bp**, and the 10-year is under **5.22%** | Change under **1 bp** | Change under **0.03**, and above **105.17** | Change under **0.05** |
+| **Mild pressure** | Up **1–5 bp**, while the 10-year is under **5.22%** | Down **1–5 bp** | Down **0.03–0.25**, while above **105.17** | Up **0.05–0.30** |
+| **Strong pressure** | Up more than **5 bp**, or the 10-year is above **5.22%** | Down more than **5 bp** | Down more than **0.25**, or below **105.17** | Up more than **0.30** |
+
+A higher real yield pressures gold. A higher 10-year yield pressures gold. A higher note price supports gold. A higher dollar pressures gold. Higher expected inflation supports gold. These five rows do not appear again in the suggestions table.
 
 **Table 2 is the suggestions table.** Do not add a third table for the candles. Every row carries:
 

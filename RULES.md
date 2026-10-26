@@ -2,7 +2,7 @@
 
 These are the rules used for the running XAUUSD commentary in this repo. This is market commentary, not personal financial advice. Price levels go stale. The method below does not.
 
-Last updated: **2:07 PM Bangladesh, Monday 26 October 2026**.
+Last updated: **2:19 PM Bangladesh, Monday 26 October 2026**.
 
 ## How a candle is read
 
@@ -120,7 +120,7 @@ The nearer supply at **4002–4006** is a **50%** sell only after a 5-minute, th
 
 ## MetaTrader 5 robot
 
-The robot is `mt5/XAUUSD_Rules_EA.mq5`. It applies this method on an XAUUSD chart. A trade needs a 5-minute close back through the block, a 15-minute close on the same side, and order flow leading on that 5-minute bar. A wick does not open a trade. The order-flow split is the one in the checks: buy side is volume × (close − low) / (high − low), and the sell side is the rest. A side leads at **75%** of the bar. The robot holds one position. The default lot is **0.01**. There is no grid and no adding to a loser.
+The robot is `mt5/XAUUSD_Rules_EA.mq5`. It applies this method on an XAUUSD chart. A trade needs a 5-minute close back through the block, a 15-minute close on the same side, and order flow leading on that 5-minute bar. A wick does not open a trade. Higher-timeframe support, resistance, and order blocks gate that trade. A buy inside a 30-minute or higher sell block waits. A sell inside a 30-minute or higher buy block waits. A 1-hour, 2-hour, 4-hour, or daily close through the cancel keeps the trade off. A strong 4-hour, daily, weekly, or monthly level within **6** dollars blocks a trade into it. The first target is the nearer of the plan target and that higher-timeframe level. The order-flow split is the one in the checks: buy side is volume × (close − low) / (high − low), and the sell side is the rest. A side leads at **75%** of the bar. The robot holds one position. The default lot is **0.01**. There is no grid and no adding to a loser.
 
 Install it on the computer where MetaTrader 5 is installed:
 
@@ -132,7 +132,7 @@ Install it on the computer where MetaTrader 5 is installed:
 6. Turn on **Algo Trading**.
 7. Run it on a **demo** account first.
 
-The chart comment shows **Buy now**, **Sell now**, the last 5-minute and 15-minute flow, and the spread. Blue rectangles are buy blocks. Red rectangles are sell blocks. The darker color is the strong block.
+The chart comment shows **Buy now**, **Sell now**, the last 5-minute and 15-minute flow, the 1-hour, 2-hour, 4-hour, and daily closes, the nearest supports and resistances, and the higher-timeframe **+OB** and **−OB** rows. Blue rectangles are buy blocks. Red rectangles are sell blocks. The darker color is the strong block. Dotted lines are strong 4-hour, daily, weekly, and monthly support and resistance.
 
 The default prices are the **26 October 2026** plan. They go stale. Change them in the inputs when a newer check replaces them.
 
@@ -155,4 +155,4 @@ The 4-hour clock in this plan closes at **03:00, 07:00, 11:00, 15:00, 19:00, and
 
 The parameters table stays outside the robot. The buy plan still wants the note future above **105.17** and the 10-year yield under **5.22%**. A reclaim that closed before the robot was attached is left alone. The next fresh reclaim can trade.
 
-Detected blocks are drawn from the 15-minute, 30-minute, 1-hour, 2-hour, 4-hour, and daily bars. They trade after **Trade a detected block** is turned on. A detected buy is a close back above the block. A detected sell is a close back under the block. A block the plan already has is kept as the plan block.
+Detected blocks are drawn from the 15-minute, 30-minute, 1-hour, 2-hour, 4-hour, and daily bars. A detected 1-hour or higher block gates a trade even while **Trade a detected block** is off. It trades after that input is turned on. A detected buy is a close back above the block. A detected sell is a close back under the block. A block the plan already has is kept as the plan block. The plan support **3975.5** and the plan resistance **4034.2** are inputs, with the weekly and monthly highs and lows taken from the chart.

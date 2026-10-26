@@ -32,6 +32,14 @@
 //| when it does not. Entries still use the 5-minute and 15-minute   |
 //| closes.                                                           |
 //|                                                                  |
+//| Higher timeframe                                                  |
+//| A 30-minute or higher block, and 4-hour, daily, weekly, and      |
+//| monthly support and resistance, gate the trade. A buy inside a   |
+//| higher-timeframe sell block waits. A sell inside a higher-       |
+//| timeframe buy block waits. A 1-hour, 2-hour, 4-hour, or daily    |
+//| close through the cancel keeps the trade off. The first target   |
+//| is the nearer higher-timeframe level.                            |
+//|                                                                  |
 //| Default blocks are the 26 October 2026 plan. They go stale.      |
 //| Edit the inputs when a newer check replaces them.                |
 //+------------------------------------------------------------------+
@@ -131,7 +139,7 @@ input double InpFarTp2             = 4024.0;
 
 input group "Detected order blocks"
 input bool   InpDetectBlocks         = true;  // Find and draw blocks on 15m, 30m, 1h, 2h, 4h, daily
-input bool   InpTradeDetectedBlocks  = false; // Trade a detected block (off until you turn it on)
+input bool   InpTradeDetectedBlocks  = false; // Trade a detected block. Higher-timeframe blocks still gate trades when this is off
 input int    InpAtrPeriod            = 14;
 input double InpImpulseAtr           = 1.5;   // Impulse range versus ATR
 input double InpStrongAtr            = 2.5;   // Strong when the impulse is this many ATR, or on 4h/daily
@@ -150,6 +158,12 @@ input double InpRewardRisk     = 2.0;        // Detected target when no opposite
 input double InpMaxChase       = 15.0;       // Close must be this close to the entry, price
 input int    InpTouchBars      = 12;         // Touch of the block within this many closed 5m bars
 input double InpMinTarget      = 2.0;        // Skip a target closer than this
+
+input group "Higher timeframe"
+input bool   InpUseHtfStructure = true;      // Gate trades with higher-timeframe support, resistance, and blocks
+input double InpHtfRoom         = 6.0;       // A strong 4h, daily, weekly, or monthly level this close blocks a trade into it
+input double InpPlanSupport     = 3975.5;    // Strong support, daily and weekly low
+input double InpPlanResistance  = 4034.2;    // Strong resistance, weekly high
 
 input group "Clock"
 input int    InpServerUtcOffset = 3;         // Broker server UTC offset. 3 matches the Bangladesh 4h clock
@@ -177,6 +191,16 @@ struct Zone
    datetime time;
    string   name;
    string   tfName;
+   int      tfRank;     // 1=15m, 2=30m, 3=1h, 4=2h, 5=4h, 6=daily, 7=weekly, 8=monthly
+};
+
+struct Level
+{
+   bool   support;
+   bool   strong;
+   double price;
+   int    rank;
+   string name;
 };
 
 //====================================================================
@@ -185,6 +209,8 @@ struct Zone
 CTrade   g_trade;
 Zone     g_zone[];
 int      g_zoneCount = 0;
+Level    g_level[];
+int      g_levelCount = 0;
 int      g_atrHandle[6] = {-1, -1, -1, -1, -1, -1};
 ENUM_TIMEFRAMES g_tf[6];
 bool     g_atrWait = true;
@@ -500,9 +526,10 @@ void AddManual(const bool enabled, const bool bull, const bool strong, const boo
                const bool halfLot, const bool mild,
                const double low, const double high, const double entry,
                const double stop, const double tp, const double tp2,
-               const double armAbove, const double armBelow, const string name)
+               const double armAbove, const double armBelow, const string name,
+               const string tfName, const int tfRank)
 {
-   if(!enabled && !InpDrawOther && !plan)
+   if(low <= 0.0 || high <= 0.0)
       return;
    Zone zone;
    zone.enabled  = enabled;
@@ -522,7 +549,8 @@ void AddManual(const bool enabled, const bool bull, const bool strong, const boo
    zone.armBelow = armBelow;
    zone.time     = TimeCurrent() - 2 * 24 * 3600;
    zone.name     = name;
-   zone.tfName   = "plan";
+   zone.tfName   = tfName;
+   zone.tfRank   = tfRank;
    if(zone.high < zone.low)
    {
       double swap = zone.high;
@@ -594,6 +622,17 @@ void AddDetected(const bool bull, const bool strong, const double low, const dou
       g_zone[i].mild = !g_zone[i].strong;
       if(barTime > g_zone[i].time)
          g_zone[i].time = barTime;
+      int rank = RankOfTimeframe(tfName);
+      if(rank > g_zone[i].tfRank)
+      {
+         g_zone[i].tfRank = rank;
+         g_zone[i].tfName = tfName;
+         g_zone[i].name = (g_zone[i].strong ? "Strong " : "Mild ")
+                          + (g_zone[i].bull ? "+OB " : "-OB ")
+                          + tfName + " "
+                          + DoubleToString(g_zone[i].low, 1) + "-"
+                          + DoubleToString(g_zone[i].high, 1);
+      }
       FinalizeDetected(g_zone[i]);
       return;
    }
@@ -611,6 +650,7 @@ void AddDetected(const bool bull, const bool strong, const double low, const dou
    zone.armBelow = 0.0;
    zone.time     = barTime;
    zone.tfName   = tfName;
+   zone.tfRank   = RankOfTimeframe(tfName);
    zone.name     = (strong ? "Strong " : "Mild ") + (bull ? "+OB " : "-OB ")
                    + tfName + " " + DoubleToString(low, 1) + "-" + DoubleToString(high, 1);
    FinalizeDetected(zone);
@@ -736,32 +776,51 @@ void KeepClosestDetected()
    ArrayResize(g_zone, g_zoneCount);
 }
 
+int RankOfTimeframe(const string tfName)
+{
+   if(tfName == "30m")
+      return 2;
+   if(tfName == "1h")
+      return 3;
+   if(tfName == "2h")
+      return 4;
+   if(tfName == "4h")
+      return 5;
+   if(tfName == "1d")
+      return 6;
+   if(tfName == "1w")
+      return 7;
+   if(tfName == "1mo")
+      return 8;
+   return 1;
+}
+
 void BuildManual()
 {
    AddManual(InpTradeBuy1, true, true, true, false, false,
              InpBuy1Low, InpBuy1High, InpBuy1Entry, InpBuy1Stop, InpBuy1Tp, InpBuy1Tp2,
-             InpBuy1ArmAbove, 0.0, "Strong +OB 3982-3987");
+             InpBuy1ArmAbove, 0.0, "Strong +OB 3982-3987, 1h 2h 4h daily", "4h", 6);
    AddManual(InpTradeBuy2, true, true, true, false, false,
              InpBuy2Low, InpBuy2High, InpBuy2Entry, InpBuy2Stop, InpBuy2Tp, InpBuy2Tp2,
-             0.0, InpBuy2ArmBelow, "Strong +OB 3943-3959");
+             0.0, InpBuy2ArmBelow, "Strong +OB 3943-3959, 4h daily", "1d", 6);
    AddManual(InpTradeSell1, false, false, true, false, true,
              InpSell1Low, InpSell1High, InpSell1Entry, InpSell1Stop, InpSell1Tp, InpSell1Tp2,
-             0.0, 0.0, "Mild -OB 4024-4032");
+             0.0, 0.0, "Mild -OB 4024-4032, 15m 4h", "4h", 5);
    AddManual(InpTradeShelf, false, false, true, true, true,
              InpShelfLow, InpShelfHigh, InpShelfEntry, InpShelfStop, InpShelfTp, InpShelfTp2,
-             0.0, 0.0, "Shelf sell 4002-4006");
+             0.0, 0.0, "Shelf sell 4002-4006, 15m", "15m", 1);
    AddManual(InpTradeMildZones, true, false, false, false, true,
              InpMildBuyLow, InpMildBuyHigh, InpMildBuyEntry, InpMildBuyStop, InpMildBuyTp, 0.0,
-             0.0, 0.0, "Mild +OB 4003-4007");
+             0.0, 0.0, "Mild +OB 4003-4007, 15m 30m", "30m", 2);
    AddManual(InpTradeMildZones, false, false, false, false, true,
              InpSell4009Low, InpSell4009High, InpSell4009Entry, InpSell4009Stop, InpSell4009Tp, 0.0,
-             0.0, 0.0, "Mild -OB 4009-4012");
+             0.0, 0.0, "Mild -OB 4009-4012, 15m 30m 1h", "1h", 3);
    AddManual(InpTradeMildZones, false, false, false, false, true,
              InpSell4015Low, InpSell4015High, InpSell4015Entry, InpSell4015Stop, InpSell4015Tp, 0.0,
-             0.0, 0.0, "Mild -OB 4015-4019");
+             0.0, 0.0, "Mild -OB 4015-4019, 15m 30m 1h 2h", "2h", 4);
    AddManual(InpTradeFarSell, false, true, true, false, false,
              InpFarLow, InpFarHigh, InpFarEntry, InpFarStop, InpFarTp, InpFarTp2,
-             0.0, 0.0, "Strong -OB 4088-4103");
+             0.0, 0.0, "Strong -OB 4088-4103, 4h daily", "1d", 6);
 }
 
 bool ZoneGeometryOk(const Zone &zone)
@@ -832,6 +891,255 @@ color ZoneColor(const Zone &zone)
    return zone.strong ? clrCrimson : clrOrangeRed;
 }
 
+void AddLevel(const bool support, const bool strong, const double price,
+             const int rank, const string name)
+{
+   if(price <= 0.0 || g_levelCount >= 64)
+      return;
+   for(int i = 0; i < g_levelCount; i++)
+   {
+      if(g_level[i].support != support)
+         continue;
+      if(MathAbs(g_level[i].price - price) > 1.0)
+         continue;
+      if((strong && !g_level[i].strong) || rank > g_level[i].rank)
+      {
+         g_level[i].strong = g_level[i].strong || strong;
+         g_level[i].rank = rank;
+         g_level[i].name = name;
+         g_level[i].price = price;
+      }
+      return;
+   }
+   ArrayResize(g_level, g_levelCount + 1);
+   g_level[g_levelCount].support = support;
+   g_level[g_levelCount].strong = strong;
+   g_level[g_levelCount].price = price;
+   g_level[g_levelCount].rank = rank;
+   g_level[g_levelCount].name = name;
+   g_levelCount++;
+}
+
+void AddClosedExtremes(const ENUM_TIMEFRAMES tf, const int rank, const string tfName)
+{
+   MqlRates rates[];
+   ArraySetAsSeries(rates, true);
+   if(CopyRates(_Symbol, tf, 1, 1, rates) < 1)
+      return;
+   bool strong = (rank >= 5);
+   AddLevel(false, strong, rates[0].high, rank, tfName + " high " + DoubleToString(rates[0].high, 1));
+   AddLevel(true, strong, rates[0].low, rank, tfName + " low " + DoubleToString(rates[0].low, 1));
+}
+
+void AddOpenExtremes(const ENUM_TIMEFRAMES tf, const int rank, const string tfName)
+{
+   double hi = iHigh(_Symbol, tf, 0);
+   double lo = iLow(_Symbol, tf, 0);
+   bool strong = (rank >= 5);
+   if(hi > 0.0)
+      AddLevel(false, strong, hi, rank, tfName + " high " + DoubleToString(hi, 1));
+   if(lo > 0.0)
+      AddLevel(true, strong, lo, rank, tfName + " low " + DoubleToString(lo, 1));
+}
+
+void AddSwings(const ENUM_TIMEFRAMES tf, const int rank, const string tfName)
+{
+   MqlRates rates[];
+   ArraySetAsSeries(rates, true);
+   int got = CopyRates(_Symbol, tf, 1, 80, rates);
+   if(got < 6)
+      return;
+   bool strong = (rank >= 5);
+   bool foundHigh = false;
+   bool foundLow = false;
+   int last = got - 3;
+   for(int i = 2; i <= last; i++)
+   {
+      if(!foundHigh
+         && rates[i].high > rates[i - 1].high && rates[i].high > rates[i - 2].high
+         && rates[i].high > rates[i + 1].high && rates[i].high > rates[i + 2].high)
+      {
+         AddLevel(false, strong, rates[i].high, rank, tfName + " swing high " + DoubleToString(rates[i].high, 1));
+         foundHigh = true;
+      }
+      if(!foundLow
+         && rates[i].low < rates[i - 1].low && rates[i].low < rates[i - 2].low
+         && rates[i].low < rates[i + 1].low && rates[i].low < rates[i + 2].low)
+      {
+         AddLevel(true, strong, rates[i].low, rank, tfName + " swing low " + DoubleToString(rates[i].low, 1));
+         foundLow = true;
+      }
+      if(foundHigh && foundLow)
+         break;
+   }
+}
+
+void BuildLevels()
+{
+   ArrayResize(g_level, 0);
+   g_levelCount = 0;
+   AddClosedExtremes(PERIOD_M30, 2, "30m");
+   AddClosedExtremes(PERIOD_H1, 3, "1h");
+   AddClosedExtremes(PERIOD_H2, 4, "2h");
+   AddClosedExtremes(PERIOD_H4, 5, "4h");
+   AddClosedExtremes(PERIOD_D1, 6, "daily");
+   AddClosedExtremes(PERIOD_W1, 7, "weekly");
+   AddClosedExtremes(PERIOD_MN1, 8, "monthly");
+   AddOpenExtremes(PERIOD_W1, 7, "weekly");
+   AddOpenExtremes(PERIOD_MN1, 8, "monthly");
+   AddSwings(PERIOD_H4, 5, "4h");
+   AddSwings(PERIOD_D1, 6, "daily");
+   AddSwings(PERIOD_W1, 7, "weekly");
+   for(int i = 0; i < g_zoneCount; i++)
+   {
+      if(g_zone[i].tfRank < 2 || g_zone[i].high <= g_zone[i].low)
+         continue;
+      bool strong = (g_zone[i].strong || g_zone[i].tfRank >= 5);
+      if(g_zone[i].bull)
+         AddLevel(true, strong, g_zone[i].low, g_zone[i].tfRank, g_zone[i].name);
+      else
+         AddLevel(false, strong, g_zone[i].high, g_zone[i].tfRank, g_zone[i].name);
+   }
+   if(InpPlanSupport > 0.0)
+      AddLevel(true, true, InpPlanSupport, 8, "Strong support " + DoubleToString(InpPlanSupport, 1) + ", daily and weekly");
+   if(InpPlanResistance > 0.0)
+      AddLevel(false, true, InpPlanResistance, 8, "Strong resistance " + DoubleToString(InpPlanResistance, 1) + ", weekly");
+}
+
+bool PriceInside(const double price, const double low, const double high)
+{
+   return (price >= low && price <= high);
+}
+
+string HtfGate(const Zone &zone, const double close)
+{
+   if(!InpUseHtfStructure)
+      return "";
+
+   string inside = "";
+   int insideRank = -1;
+   for(int i = 0; i < g_zoneCount; i++)
+   {
+      if(g_zone[i].bull == zone.bull || g_zone[i].high <= g_zone[i].low)
+         continue;
+      if(MathAbs(g_zone[i].low - zone.low) < 0.05 && MathAbs(g_zone[i].high - zone.high) < 0.05)
+         continue;
+      bool higher = g_zone[i].manual ? (g_zone[i].tfRank >= 2) : (g_zone[i].tfRank >= 3);
+      if(!higher)
+         continue;
+      if(!PriceInside(close, g_zone[i].low, g_zone[i].high))
+         continue;
+      if(g_zone[i].tfRank > insideRank)
+      {
+         insideRank = g_zone[i].tfRank;
+         inside = "5m close is inside " + g_zone[i].name;
+      }
+   }
+   if(StringLen(inside) > 0)
+      return inside;
+
+   for(int i = 0; i < g_levelCount; i++)
+   {
+      if(!g_level[i].strong || g_level[i].rank < 5)
+         continue;
+      if(zone.bull && !g_level[i].support)
+      {
+         double gap = g_level[i].price - close;
+         if(gap < 0.0 || gap > InpHtfRoom || g_level[i].price <= zone.high)
+            continue;
+         return "strong resistance " + g_level[i].name + " is within " + DoubleToString(InpHtfRoom, 1);
+      }
+      if(!zone.bull && g_level[i].support)
+      {
+         double gap = close - g_level[i].price;
+         if(gap < 0.0 || gap > InpHtfRoom || g_level[i].price >= zone.low)
+            continue;
+         return "strong support " + g_level[i].name + " is within " + DoubleToString(InpHtfRoom, 1);
+      }
+   }
+
+   ENUM_TIMEFRAMES tfs[4];
+   string names[4];
+   tfs[0] = PERIOD_H1;
+   tfs[1] = PERIOD_H2;
+   tfs[2] = PERIOD_H4;
+   tfs[3] = PERIOD_D1;
+   names[0] = "1h";
+   names[1] = "2h";
+   names[2] = "4h";
+   names[3] = "daily";
+   string broke = "";
+   for(int i = 0; i < 4; i++)
+   {
+      MqlRates rates[];
+      ArraySetAsSeries(rates, true);
+      if(CopyRates(_Symbol, tfs[i], 1, 1, rates) < 1)
+         continue;
+      bool against = zone.bull ? (rates[0].close < zone.stop) : (rates[0].close > zone.stop);
+      if(!against)
+         continue;
+      broke = names[i] + " close " + DoubleToString(rates[0].close, _Digits)
+              + (zone.bull ? " is under the cancel " : " is above the cancel ")
+              + DoubleToString(zone.stop, _Digits);
+   }
+   return broke;
+}
+
+double StructureTarget(const Zone &zone)
+{
+   double tp = zone.tp;
+   double best = 0.0;
+   for(int i = 0; i < g_levelCount; i++)
+   {
+      if(g_level[i].rank < 5 && !g_level[i].strong)
+         continue;
+      if(zone.bull && !g_level[i].support)
+      {
+         if(g_level[i].price <= zone.high)
+            continue;
+         if(g_level[i].price - zone.entry < InpMinTarget)
+            continue;
+         if(best <= 0.0 || g_level[i].price < best)
+            best = g_level[i].price;
+      }
+      if(!zone.bull && g_level[i].support)
+      {
+         if(g_level[i].price >= zone.low)
+            continue;
+         if(zone.entry - g_level[i].price < InpMinTarget)
+            continue;
+         if(best <= 0.0 || g_level[i].price > best)
+            best = g_level[i].price;
+      }
+   }
+   if(best <= 0.0)
+      return tp;
+   if(zone.bull && (tp <= 0.0 || best < tp))
+      return best;
+   if(!zone.bull && (tp <= 0.0 || best > tp))
+      return best;
+   return tp;
+}
+
+void DrawLevels()
+{
+   for(int i = 0; i < g_levelCount; i++)
+   {
+      if(!g_level[i].strong)
+         continue;
+      string name = "XAUOB_LV_" + IntegerToString(i);
+      if(!ObjectCreate(0, name, OBJ_HLINE, 0, 0, g_level[i].price))
+         continue;
+      color clr = g_level[i].support ? clrDodgerBlue : clrCrimson;
+      ObjectSetInteger(0, name, OBJPROP_COLOR, (long)clr);
+      ObjectSetInteger(0, name, OBJPROP_STYLE, STYLE_DOT);
+      ObjectSetInteger(0, name, OBJPROP_WIDTH, g_level[i].rank >= 7 ? 2 : 1);
+      ObjectSetInteger(0, name, OBJPROP_BACK, true);
+      ObjectSetInteger(0, name, OBJPROP_SELECTABLE, false);
+      ObjectSetString(0, name, OBJPROP_TOOLTIP, g_level[i].name);
+   }
+}
+
 void DrawZones()
 {
    DeleteDrawings();
@@ -872,6 +1180,7 @@ void DrawZones()
          ObjectSetInteger(0, label, OBJPROP_SELECTABLE, false);
       }
    }
+   DrawLevels();
    ChartRedraw(0);
 }
 
@@ -891,6 +1200,7 @@ void RefreshZones()
       PullTargetsToOpposite();
       KeepClosestDetected();
    }
+   BuildLevels();
    DrawZones();
 }
 
@@ -957,6 +1267,9 @@ string ZoneWaitReason(const Zone &zone, const MqlRates &m5[], const int m5Count,
       return "5m close is not back through " + DoubleToString(zone.entry, _Digits);
    if(m15Count < 1 || !ClosedThrough(zone.bull, m15[0].close, zone.entry))
       return "15m close has not confirmed";
+   string htfEarly = HtfGate(zone, m5[0].close);
+   if(StringLen(htfEarly) > 0)
+      return htfEarly;
    if(!WithinChase(zone.bull, m5[0].close, zone.entry))
       return "5m close is more than " + DoubleToString(InpMaxChase, 1) + " from the entry";
 
@@ -997,13 +1310,14 @@ string ZoneWaitReason(const Zone &zone, const MqlRates &m5[], const int m5Count,
    if(SideLeads(!zone.bull, b15, s15))
       return "15m order flow leads the other way";
 
+   double target = StructureTarget(zone);
    return StringFormat("ready. 5m %s %s, buy %s, sell %s. 15m %s %s, buy %s, sell %s. Stop %s, target %s.",
                        DoubleToString(total, 0), VolUnit(),
                        DoubleToString(buyVol, 0), DoubleToString(sellVol, 0),
                        DoubleToString(t15, 0), VolUnit(),
                        DoubleToString(b15, 0), DoubleToString(s15, 0),
                        DoubleToString(zone.stop, _Digits),
-                       DoubleToString(zone.tp, _Digits));
+                       DoubleToString(target, _Digits));
 }
 
 int PickZone(const bool bull, const MqlRates &m5[], const int m5Count,
@@ -1176,13 +1490,22 @@ bool TryOpen(const Zone &zone, const MqlRates &signalBar)
 
    double lots = NormalizeLot(zone.halfLot ? InpLots * 0.5 : InpLots);
    bool halfCollapsed = (zone.halfLot && lots + 1e-8 >= InpLots);
-   bool split = (zone.tp2 > 0.0 && CanSplit(lots));
+   double firstTarget = StructureTarget(zone);
+   if(firstTarget <= 0.0)
+      firstTarget = zone.tp;
+   double secondTarget = 0.0;
+   if(zone.tp2 > 0.0 && ((zone.bull && zone.tp2 > firstTarget) || (!zone.bull && zone.tp2 < firstTarget)))
+      secondTarget = zone.tp2;
+   else if(zone.tp > 0.0 && MathAbs(zone.tp - firstTarget) > 0.05
+           && ((zone.bull && zone.tp > firstTarget) || (!zone.bull && zone.tp < firstTarget)))
+      secondTarget = zone.tp;
+   bool split = (secondTarget > 0.0 && CanSplit(lots));
    double sl = zone.stop;
    if(!InpUseHardStop)
       sl = zone.bull ? zone.stop - InpDisasterExtra : zone.stop + InpDisasterExtra;
-   double tp = (split || zone.tp <= 0.0) ? zone.tp2 : zone.tp;
+   double tp = split ? secondTarget : firstTarget;
    if(tp <= 0.0)
-      tp = zone.tp;
+      tp = firstTarget;
    sl = NormPrice(sl);
    tp = NormPrice(tp);
 
@@ -1232,8 +1555,8 @@ bool TryOpen(const Zone &zone, const MqlRates &signalBar)
 
    GvSet("bull", zone.bull ? 1.0 : 0.0);
    GvSet("stop", zone.stop);
-   GvSet("tp1", zone.tp);
-   GvSet("tp2", zone.tp2);
+   GvSet("tp1", firstTarget);
+   GvSet("tp2", secondTarget);
    GvSet("scaled", split ? 0.0 : 1.0);
    GvSet("entry", zone.entry);
 
@@ -1243,7 +1566,7 @@ bool TryOpen(const Zone &zone, const MqlRates &signalBar)
                             zone.bull ? "buy" : "sell",
                             lots,
                             zone.stop,
-                            (zone.tp > 0.0 ? zone.tp : tp),
+                            (firstTarget > 0.0 ? firstTarget : tp),
                             DoubleToString(buyVol, 0),
                             DoubleToString(sellVol, 0));
    if(halfCollapsed)
@@ -1365,6 +1688,113 @@ void ManageScale()
 //====================================================================
 // Panel
 //====================================================================
+string ClipText(const string text, const int maxLen)
+{
+   if(StringLen(text) <= maxLen)
+      return text;
+   return StringSubstr(text, 0, maxLen - 3) + "...";
+}
+
+string NearLevels(const bool support, const double price)
+{
+   string text = support ? "Supports: " : "Resistances: ";
+   bool used[];
+   ArrayResize(used, g_levelCount);
+   ArrayInitialize(used, false);
+   int added = 0;
+   for(int n = 0; n < 3; n++)
+   {
+      int pick = -1;
+      double best = 1.0e12;
+      for(int i = 0; i < g_levelCount; i++)
+      {
+         if(i >= ArraySize(used) || used[i] || g_level[i].support != support)
+            continue;
+         if(support && g_level[i].price > price + 0.5)
+            continue;
+         if(!support && g_level[i].price < price - 0.5)
+            continue;
+         double dist = MathAbs(price - g_level[i].price);
+         if(dist < best)
+         {
+            best = dist;
+            pick = i;
+         }
+      }
+      if(pick < 0)
+         break;
+      used[pick] = true;
+      if(added > 0)
+         text += "; ";
+      text += g_level[pick].name;
+      added++;
+   }
+   if(added == 0)
+      text += "none on this side";
+   return ClipText(text, 220);
+}
+
+string ObLine(const bool bull)
+{
+   string text = bull ? "+OB: " : "-OB: ";
+   bool used[];
+   ArrayResize(used, g_zoneCount);
+   ArrayInitialize(used, false);
+   int added = 0;
+   for(int n = 0; n < 4; n++)
+   {
+      int pick = -1;
+      double best = 1.0e12;
+      for(int i = 0; i < g_zoneCount; i++)
+      {
+         if(i >= ArraySize(used) || used[i] || g_zone[i].bull != bull || g_zone[i].tfRank < 2)
+            continue;
+         double mid = (g_zone[i].low + g_zone[i].high) * 0.5;
+         double dist = MathAbs(mid - SymbolInfoDouble(_Symbol, SYMBOL_BID));
+         dist -= g_zone[i].tfRank * 2.0;
+         if(dist < best)
+         {
+            best = dist;
+            pick = i;
+         }
+      }
+      if(pick < 0)
+         break;
+      used[pick] = true;
+      if(added > 0)
+         text += "; ";
+      text += g_zone[pick].name;
+      added++;
+   }
+   if(added == 0)
+      text += "none from 30m or higher";
+   return ClipText(text, 220);
+}
+
+string HtfCloseLine()
+{
+   ENUM_TIMEFRAMES tfs[4];
+   string names[4];
+   tfs[0] = PERIOD_H1;
+   tfs[1] = PERIOD_H2;
+   tfs[2] = PERIOD_H4;
+   tfs[3] = PERIOD_D1;
+   names[0] = "1h";
+   names[1] = "2h";
+   names[2] = "4h";
+   names[3] = "daily";
+   string text = "Higher-timeframe closes:";
+   for(int i = 0; i < 4; i++)
+   {
+      MqlRates rates[];
+      ArraySetAsSeries(rates, true);
+      if(CopyRates(_Symbol, tfs[i], 1, 1, rates) < 1)
+         continue;
+      text += " " + names[i] + " " + DoubleToString(rates[0].close, _Digits);
+   }
+   return text;
+}
+
 void UpdatePanel()
 {
    MqlRates m5[];
@@ -1423,6 +1853,11 @@ void UpdatePanel()
                  + g_sellLine + "\n"
                  + flow5 + "\n"
                  + flow15 + "\n"
+                 + HtfCloseLine() + "\n"
+                 + NearLevels(true, bid) + "\n"
+                 + NearLevels(false, bid) + "\n"
+                 + ObLine(true) + "\n"
+                 + ObLine(false) + "\n"
                  + volWarn + "\n"
                  + posLine + "\n"
                  + g_actLine + "\n"

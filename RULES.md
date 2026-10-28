@@ -2,7 +2,7 @@
 
 These are the rules used for the running XAUUSD commentary in this repo. This is market commentary, not personal financial advice. Price levels go stale. The method below does not.
 
-Last updated: **10:20 PM Bangladesh, Wednesday 28 October 2026**.
+Last updated: **1:11 AM Bangladesh, Thursday 29 October 2026**.
 
 ## How a candle is read
 
@@ -54,7 +54,7 @@ Every check includes the latest **closed 5-minute** bar and the latest **closed 
 
 Friday 23 October is the size benchmark. A quiet 5-minute bar was about **500–1,000** contracts. A bar that carried a decision was above **2,000** contracts. The fall itself was above **5,000** contracts. A side leads when it is about three times the other side, or more than **75%** of the bar. These numbers describe the bar. They are not a line that allows or blocks a buy or a sell.
 
-Every check reads the contract count and the order flow. State the count, the buy-side contracts, and the sell-side contracts where a print exists. A row with no print says the print is not out. Do not use that count as the reason to take or to skip the trade. The buy and the sell follow the price rules already in this file: a 5-minute close, the 15-minute confirmation, the order blocks, the deep plan, and support and resistance.
+Every check reads the contract count and the order flow. State the count, the buy-side contracts, and the sell-side contracts where a print exists. A row with no print says the print is not out. Every signal table carries a **Contract** row, including a validity check and a one-line update. The row gives the latest closed 5-minute `GC=F` bar: the Bangladesh time, the contract count, the buy-side contracts, and the sell-side contracts. A missing Contract row is an incomplete check. Do not use that count as the reason to take or to skip the trade. The buy and the sell follow the price rules already in this file: a 5-minute close, the 15-minute confirmation, the order blocks, the deep plan, and support and resistance.
 
 When a move is a crash or a massive rise, say so in the first line, before the tables. Name the Bangladesh time, the size of the move, and the level that broke. Do not wait for the table to carry that alert.
 

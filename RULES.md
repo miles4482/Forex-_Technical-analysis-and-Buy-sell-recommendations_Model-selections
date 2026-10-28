@@ -2,7 +2,7 @@
 
 These are the rules used for the running XAUUSD commentary in this repo. This is market commentary, not personal financial advice. Price levels go stale. The method below does not.
 
-Last updated: **5:19 PM Bangladesh, Monday 26 October 2026**.
+Last updated: **10:20 PM Bangladesh, Wednesday 28 October 2026**.
 
 ## How a candle is read
 
@@ -10,7 +10,7 @@ Last updated: **5:19 PM Bangladesh, Monday 26 October 2026**.
 - Yahoo Finance bars are stamped at the **bar start**. A 15-minute bar stamped 1:45 closed at 2:00. Name the candle by the close.
 - A flat, zero-range last bar is an unfinished stub. Ignore it. A bar that already has a real range and has not reached its close time is still forming. Do not treat it as closed.
 - A wick is not a trigger. Buy and sell levels need a **close** through the level.
-- The **5-minute close** is the immediate decision. The **15-minute close** confirms it. When a 15-minute candle and an hourly candle close together, the hour is the lead candle.
+- The **5-minute close** is the immediate entry. The **15-minute close** confirms that entry, and it is the close that finishes the trade. The trade stays open until the 15-minute candle closes through the swing. When a 15-minute candle and an hourly candle close together, the hour is the lead candle.
 - The check is adaptive. Read the **5-minute**, **15-minute**, **30-minute**, **1-hour**, **2-hour**, and **4-hour** candles, and the **daily** when price is inside a daily range or near a daily block. Report the timeframes that change the trade. A quiet higher-timeframe candle with nothing at a level does not need its own row.
 - The user’s 4-hour clock is the one used for calls. In Bangladesh those candles change at **3:00 AM, 7:00 AM, 11:00 AM, 3:00 PM, 7:00 PM, and 11:00 PM**. The live biquote feed is one hour earlier, at 2:00, 6:00, 10:00, 2:00 PM, 6:00 PM, and 10:00 PM. Name a feed candle by its own time, and do not call that the user’s 4-hour close.
 
@@ -89,6 +89,38 @@ Rows, in order: **Scope now**, **Entry**, **Confirmation**, **Deep plan**, **Sto
 
 Use one working plan: direction, the entry, the stop, and the targets. Do not publish a menu of dip buy, deeper dip, strong buy, tactical sell, and strong sell in the same update unless that menu is explicitly requested.
 
+## Lessons from the closed sells
+
+Two sells moved toward the target and then lost money on the stop. The direction of each sell was intact when the stop ended it. The 28 October sell repeated the 27 October sell. The correction comes from the earlier trade.
+
+| Trade | Entry | Best price | Target | How it ended |
+|---|---|---|---|---|
+| 27 Oct sell | **4024** | **4018.70** | **4012** | **8:15 PM** Bangladesh. The 15-minute candle closed above **4034.2**. Out at **4035.93**. |
+| 28 Oct sell | **4040.02** | **4036.76** | **4034** | **9:20 PM** Bangladesh. A 5-minute candle closed at **4044.64**, through **4044.35**. |
+
+What the 27 October sell already showed:
+
+- The move stalled about **6** dollars short of **4012**.
+- The stop was left at **4034.2** while the trade was in profit.
+- Buyers then chased the price back through the entry and through **4034.2**.
+- The update called that a stop-out. It did not name the chase, so the next session sold again inside the same box.
+
+What that required on the 28 October sell, and what was done instead:
+
+- The swing that killed the idea was the **8:15 PM** 15-minute high at **4049.10**. The posted stop was **4044.35**, the high of the entry candle, inside the **4036–4049** box.
+- The entry **4040.02** was the middle of that box. The 27 October chase had already ruled that out.
+- A 5-minute close finished a 15-minute idea. The broker SL at **4049.10** was a second, different invalidation. The SL belongs **15** dollars beyond the same swing, at **4064.10**.
+
+Rules those two trades add. Each later check follows them.
+
+1. **The stop is the swing, on the 15-minute close.** The 5-minute close only opens the trade. The stop price is the swing high or swing low that kills the idea. It is never the high or low of the entry candle. The broker **SL** is **15** dollars beyond that same swing. Stop and SL are one invalidation, with the SL as the emergency price beyond it.
+2. **An unfinished target moves the stop to the entry.** When price stalls more than **2** dollars short of the target and a 15-minute candle closes back through the entry, that close moves the stop to the entry. The 27 October sell at **4018.70** was the case for this. The later rally to **4035.93** would have been a flat exit.
+3. **Name the chase in the first line.** A chase is that 15-minute close back through the entry after the trade has been in profit. The old plan is finished in that update.
+4. **The next trade in that direction needs a new swing.** It is a rejection at the new extreme, or a 15-minute close through the far side of the chase. It is not a repeat of the old entry, and it is not taken in the middle of the box. After the 27 October chase through **4034.2**, the 28 October sell needed a rejection at **4046–4049**, or a 15-minute close under **4036**.
+5. **A stop wider than the target is skipped.** If the swing stop is farther from the entry than the target is, there is no scalp. Use the further target, or leave the trade.
+
+The 28 October sell, read with these rules, stays open only while the 15-minute close is under **4049.10**, with the SL at **4064.10**, and only if that position was kept. A fill that already left at **4044.64** stays closed. There is no new sell at the middle of the box.
+
 ## Session clock
 
 Bangladesh is UTC+6, with no daylight saving. In October:
@@ -155,7 +187,7 @@ The default prices are the **26 October 2026** plan. They go stale. Change them 
 
 On a spot chart the bar volume is **broker ticks**. The **1,000 / 2,000 / 5,000** lines are COMEX `GC=F` contract counts. Leave **Volume is COMEX contracts** off on spot, and leave **Also accept a bar that is large versus its average** on. A decision bar is then **1.5×** the average of the last 20 closed bars of that timeframe. From **03:00 to 13:00 Bangladesh** the bar needs **2.5×** that average. Turn **Volume is COMEX contracts** on when the symbol is a futures contract. The 1,000, 2,000, and 5,000 lines then apply, and a quiet bar under 1,000 does not trade.
 
-The plan stop is a **15-minute close** through the cancel price. The robot waits for that close. An emergency broker stop sits **15** dollars beyond the cancel. Turn on **Broker stop on the cancel price** when the exit should be a touch of that price.
+The plan stop is a **15-minute close** through the cancel price. The robot waits for that close. An emergency broker stop sits **15** dollars beyond the cancel. Turn on **Broker stop on the cancel price** when the exit should be a touch of that price. The closed-sell lessons above bind the commentary. The robot still exits on the original 15-minute cancel. It does not move that stop to the entry.
 
 The 4-hour clock in this plan closes at **03:00, 07:00, 11:00, 15:00, 19:00, and 23:00 Bangladesh**. The chart’s own 4-hour bars match that clock when the broker server is **UTC+3**. The comment says when they do not. Entries still use the 5-minute and 15-minute closes. Set **Broker server UTC offset** to the server’s offset.
 

@@ -2,7 +2,7 @@
 
 These are the rules used for the running XAUUSD commentary in this repo. This is market commentary, not personal financial advice. Price levels go stale. The method below does not.
 
-Last updated: **1:11 AM Bangladesh, Thursday 29 October 2026**.
+Last updated: **12:59 PM Bangladesh, Thursday 29 October 2026**.
 
 ## How a candle is read
 
@@ -62,15 +62,19 @@ When the user says **“Please check now”** or **“Please check”**, answer 
 
 **Table 1, parameters, comes first and keeps this column order:** **Parameter**, **Status**, **Value**, **Previous Day**, **Yesterday**, **Line**, **Gold**. The rows are real yield, expected inflation, the 10-year yield, the note future, and the dollar. Status is **Open**, **Frozen**, or **Fixed for the last day**. The lines are **5.22%** for the 10-year yield, **105.17** for the note future, and the last daily dollar close for the dollar. Real yield and expected inflation are the last daily Treasury posts and have no intraday line. For a daily post, **Yesterday** is the prior post and **Previous Day** is the post before that. For the note and the dollar, **Yesterday** is the last daily close and **Previous Day** is the close before that. Do not change this table’s columns.
 
-The **Gold** column is one of five grades. The change versus yesterday sets the grade. The line is the other consideration: a break through the line the wrong way makes the grade **Strong pressure**, and a hold of the line stops a large adverse day from being read on its own.
+The **Gold** column is the impact on gold. The change versus yesterday sets the grade. The line is the other consideration: a break through the line the wrong way makes the grade **Strong pressure**, and a hold of the line stops a large adverse day from being read on its own.
 
-| Grade | 10-year yield and real yield | Expected inflation | Note future | Dollar |
+| Impact | 10-year yield and real yield | Expected inflation | Note future | Dollar |
 |---|---|---|---|---|
 | **Strong support** | Down more than **5 bp**, and the 10-year is under **5.22%** | Up more than **5 bp** | Up more than **0.25**, and above **105.17** | Down more than **0.30** |
-| **Mild support** | Down **1–5 bp**, and the 10-year is under **5.22%** | Up **1–5 bp** | Up **0.03–0.25**, and above **105.17** | Down **0.05–0.30** |
+| **Medium support** | Down **3–5 bp**, and the 10-year is under **5.22%** | Up **3–5 bp** | Up **0.12–0.25**, and above **105.17** | Down **0.15–0.30** |
+| **Less support** | Down **1–3 bp**, and the 10-year is under **5.22%** | Up **1–3 bp** | Up **0.03–0.12**, and above **105.17** | Down **0.05–0.15** |
 | **Neutral** | Change under **1 bp**, and the 10-year is under **5.22%** | Change under **1 bp** | Change under **0.03**, and above **105.17** | Change under **0.05** |
-| **Mild pressure** | Up **1–5 bp**, while the 10-year is under **5.22%** | Down **1–5 bp** | Down **0.03–0.25**, while above **105.17** | Up **0.05–0.30** |
+| **Less pressure** | Up **1–3 bp**, while the 10-year is under **5.22%** | Down **1–3 bp** | Down **0.03–0.12**, while above **105.17** | Up **0.05–0.15** |
+| **Medium pressure** | Up **3–5 bp**, while the 10-year is under **5.22%** | Down **3–5 bp** | Down **0.12–0.25**, while above **105.17** | Up **0.15–0.30** |
 | **Strong pressure** | Up more than **5 bp**, or the 10-year is above **5.22%** | Down more than **5 bp** | Down more than **0.25**, or below **105.17** | Up more than **0.30** |
+
+Every plan is printed after this macro table. Columns are **Parameter**, **Value**, **As of**, **Impact**. The rows are the 10-year yield, the note, the dollar, real yield, and expected inflation. **As of** says **Live** with the Bangladesh time of the quote, or **Frozen** with the time of the last cash print, or **Last daily post**. The **Impact** cell uses the grade names above.
 
 A higher real yield pressures gold. A higher 10-year yield pressures gold. A higher note price supports gold. A higher dollar pressures gold. Higher expected inflation supports gold.
 

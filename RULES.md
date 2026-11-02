@@ -2,7 +2,7 @@
 
 These are the rules used for the running XAUUSD commentary in this repo. This is market commentary, not personal financial advice. Price levels go stale. The method below does not.
 
-Last updated: **12:59 PM Bangladesh, Thursday 29 October 2026**.
+Last updated: **12:00 AM Bangladesh, Tuesday 3 November 2026**.
 
 ## How a candle is read
 
@@ -124,6 +124,30 @@ Rules those two trades add. Each later check follows them.
 5. **A stop wider than the target is skipped.** If the swing stop is farther from the entry than the target is, there is no scalp. Use the further target, or leave the trade.
 
 The 28 October sell, read with these rules, stays open only while the 15-minute close is under **4049.10**, with the SL at **4064.10**, and only if that position was kept. A fill that already left at **4044.64** stays closed. There is no new sell at the middle of the box.
+
+## Lessons from the 2 November 3966 buy
+
+The plan was **3943**, Strong +OB **3943–3959**. That fill was missed. A second plan was then published: buy the 5-minute close through **3966.38**, dip-hold **3966**. The user filled **3966**. The 15-minute candle at **11:15 PM** Bangladesh closed **3959.49**, under **3961.13**. Out.
+
+| Trade | Entry | Best price | Target | How it ended |
+|---|---|---|---|---|
+| 2 Nov buy | **3966** | **3970.46** | **3982** | **11:30 PM** Bangladesh. The 15-minute candle closed **3959.49**, under **3961.13**. |
+
+What that trade already showed:
+
+- **3943** was the only buy. **3966** was the top of the same +OB, and it was the **3966–3970** supply.
+- The move stalled **12** dollars short of **3982**. High **3970.46**.
+- The posted stop **3961.13** was the last 15-minute low of a **4**-dollar coil, not the swing that kills a **3966** idea. The swings that kill it are **3950.41** and **3934.83**.
+- Those real swings are farther from **3966** than **3982** is. Rule 5 already forbade the scalp. The tight stop was used to make the trade look valid.
+- After a missed **3943**, the next close above **3966** was treated as a substitute entry. That is a chase.
+
+Rules that trade adds. Each later check follows them, with the five rules above.
+
+6. **One plan stays one plan.** If the working buy is the base of a Strong +OB, a later 5-minute close through a session high is not a new buy. Stay flat until that base fills, or until the next named Strong +OB is reclaimed by a 5-minute close and a 15-minute close. Missed **3943** does not become **3966**.
+7. **Do not buy the top of a Strong +OB.** Buy the base, or wait for the next Strong +OB. On 2 November the base was **3943**. **3966** was the top of **3943–3959** and the **3966–3970** −OB.
+8. **A breakout stop is the last real 15-minute swing, not the coil low.** If that swing is farther from the entry than the first target, skip the trade. Do not tighten the stop to the last 15-minute low of a **4**-dollar range to pass Rule 5.
+9. **A dip buy is a named +OB.** A **4**-dollar pullback after a **23**-dollar run, under a session high, is not a dip. Call it a chase in the first line and stay out.
+10. **A missed fill stays flat.** Do not invent the next close as a replacement entry in the same box. The next buy needs a new swing: the base of the same block, or a 15-minute close back above the far side of the failed break.
 
 ## Session clock
 

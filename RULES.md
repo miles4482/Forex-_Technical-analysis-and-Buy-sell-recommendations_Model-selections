@@ -2,7 +2,7 @@
 
 These are the rules used for the running XAUUSD commentary in this repo. This is market commentary, not personal financial advice. Price levels go stale. The method below does not.
 
-Last updated: **12:00 AM Bangladesh, Tuesday 3 November 2026**.
+Last updated: **7:58 PM Bangladesh, Tuesday 10 November 2026**.
 
 ## How a candle is read
 
@@ -82,7 +82,7 @@ The first line of a check, before Table 1, is **Buy now** and **Sell now**.
 
 **The plan is one table.** Columns are **Plan**, **Buy Plan**, and **Sell Plan**. Keep each cell short. Every candle row states the order flow where a print exists: the contract count, the buy-side contracts, and the sell-side contracts. A lead is not stated without those three numbers. A row with no printed contracts says the print is not out. The contract count is reported. It does not decide the buy or the sell. Do not repeat Real yield, Expected inflation, 10-year yield, Note future, or Dollar in this table. Those grades stay in Table 1.
 
-Rows, in order: **Scope now**, **Entry**, **Confirmation**, **Deep plan**, **Stop**, **Targets**, **5-minute**, **15-minute**, **30-minute**, **1-hour**, **2-hour**, **4-hour**, **Supports**, **Resistances**, **+OB**, **−OB**, **Confidence**, **Major highlights**. **Deep plan** is the full-size zone behind the current idea: for a buy, **3982–3987**, then **3943–3959** if **3975.5** breaks; for a sell, **4024–4032**, then **4088–4103**. The **+OB** and **−OB** rows name every timeframe that has a block: 5-minute, 15-minute, 30-minute, 1-hour, 2-hour, 4-hour, and daily. Say whether it is mild or strong. A timeframe with no block of its own is left out. Supports and resistances name the strong level, the mild level, the low level, and the daily, weekly, and monthly level, with the range and the timeframe. Confidence is stated against the price where the suggestion applies. Major highlights carry the Bangladesh time, the contract count, and the flow. The candle rows carry:
+Rows, in order: **Scope now**, **Entry**, **Confirmation**, **Deep plan**, **Stop**, **Targets**, **5-minute**, **15-minute**, **30-minute**, **1-hour**, **2-hour**, **4-hour**, **Supports**, **Resistances**, **+OB**, **−OB**, **Confidence**, **Major highlights**. **Deep plan** is the full-size zone behind the current idea: for a buy, **4024–4032**, then **3982–3987** if **4018** breaks; for a sell, **4075–4082**, then **4088–4103**. The **+OB** and **−OB** rows name every timeframe that has a block: 5-minute, 15-minute, 30-minute, 1-hour, 2-hour, 4-hour, and daily. Say whether it is mild or strong. A timeframe with no block of its own is left out. Supports and resistances name the strong level, the mild level, the low level, and the daily, weekly, and monthly level, with the range and the timeframe. Confidence is stated against the price where the suggestion applies. Major highlights carry the Bangladesh time, the contract count, and the flow. The candle rows carry:
 
 - **5-minute close and condition.** The latest 5-minute close, its tick count, its futures contracts, and the buy-side and sell-side split, plus the close that would trigger that row. A 5-minute close through the planned level is the immediate buy or sell. Report a quiet bar. The contract count does not by itself cancel that close. Asia, **3:00 AM–1:00 PM Bangladesh**, can print a thin 5-minute close. Say that the session is thin.
 - **15-minute close status.** The latest 15-minute close and whether it has confirmed that row. A 15-minute close on the same side confirms the 5-minute trade. A 15-minute close back through the other side finishes it. The 15-minute close is the lead of the two.
@@ -165,24 +165,24 @@ Asia before London is thin. A level can break and fail there.
 
 ## Plan in force
 
-Set from the Friday 23 October 2026 close for Monday 26 October. Spot closed **3996.2**. Futures `GC=F` closed **4007.9**. The cash 10-year yield was **4.988%**, under **5.22%**. The note future was **106.16**, above **105.17**. Those two agree, so the buy is at demand. Real yield was **2.66%**. Expected inflation was **2.34%**. The dollar closed **101.81**.
+Set at **7:58 PM Bangladesh**, Tuesday 10 November 2026, after the **7:35 PM** crash bar. Spot about **4051–4052**. Futures `GC=F` about **4071**. Cash 10-year **4.938%**, under **5.22%**. Note future **106.52**, above **105.17**. Those two agree that rates are pressuring gold. Real yield last post **2.63%**. Expected inflation last post **2.22%**. Dollar about **101.99**.
 
-There is no trade at **3996**. Price sits between **3987** and **4002**.
+There is no trade at **4051**. Price sits between the crash low **~4040** and the broken shelf **4075–4082**.
 
 | Trade | Rule |
 |---|---|
-| Buy | **3982–3987**, Strong +OB, daily and 4-hour. A 5-minute close back above **3982** is the immediate buy. The 15-minute close back above **3982** confirms it. |
-| Confidence | **70%** |
-| Stop | A 15-minute close under **3975.5** |
-| Targets | **4002**, then **4012** |
+| Buy | Deep only: **4024–4032**. A 5-minute close back above **4024** is the immediate buy. The 15-minute close confirms it. Do not buy the **4050–4060** bounce. |
+| Confidence | **55%** at **4024–4032**. **0%** at the live print. |
+| Stop | A 15-minute close under **4018**. Broker SL **4003**. |
+| Targets | **4040**, then **4075** |
+| Sell | **4075–4082**, Mild −OB under the broken London / 4-hour shelf. A 5-minute close back under **4075** after the tag is the immediate sell. The 15-minute close confirms it. |
+| Confidence | **60%** at **4075–4082**. **0%** at the live print. |
+| Stop | A 15-minute close above **4088**. Broker SL **4103**. |
+| Targets | **4040**, then **4024** |
 | Order flow | Read the contract count and the buy-side and sell-side split. The split does not replace the 5-minute and 15-minute closes. |
-| Sell | **4024–4032**, Mild −OB, 15-minute and 4-hour. A 5-minute close back under **4024** is the immediate sell. The 15-minute close confirms it. |
-| Confidence | **55%** |
-| Stop | A 15-minute close above **4034.2** |
-| Targets | **4012**, then **4002** |
-| Note | The buy stays valid while `ZN=F` holds above **105.17** and `^TNX` holds under **5.22%**. |
+| Note | Macro supports the sell shelf while `ZN=F` is falling and `^TNX` is rising, even though the note is still above **105.17** and cash is still under **5.22%**. |
 
-The nearer supply at **4002–4006** is a **50%** sell only after a 5-minute, then 15-minute, close back under **4002**. A 15-minute close under **3975.5** cancels the 3982 buy and hands the plan to the deeper Strong +OB at **3943–3959**.
+If the **4075** shelf is skipped, the next sell is Strong −OB **4088–4103**. A 15-minute close under **4018** cancels the **4024** buy and hands the plan to Strong +OB **3982–3987**, stop under **3975.5**.
 
 ## MetaTrader 5 robot
 
